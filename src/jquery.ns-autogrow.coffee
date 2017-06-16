@@ -100,7 +100,13 @@
         .keyup   update
         .keydown update
 
-      $(window).resize update
+      $(window).on('resize', update)
+
+      $(document.body).bind 'DOMNodeRemoved', (event) ->
+        if $.contains(event.target, $e)
+          $(window).off('resize', update)
+          $shadow.remove()
+
       update()
 
 ) window.jQuery, window

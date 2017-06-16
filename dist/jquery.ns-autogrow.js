@@ -105,7 +105,13 @@
           };
         })(this);
         $e.change(update).keyup(update).keydown(update);
-        $(window).resize(update);
+        $(window).on('resize', update);
+        $(document.body).bind('DOMNodeRemoved', function(event) {
+          if ($.contains(event.target, $e)) {
+            $(window).off('resize', update);
+            return $shadow.remove();
+          }
+        });
         return update();
       });
     };
